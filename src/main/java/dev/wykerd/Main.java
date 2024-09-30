@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
-        VASTWebSocketClient client = new VASTWebSocketClient(Logger.getGlobal(), new Point(0, 0), "testc", "");
+        VASTWebSocketClient client = new VASTWebSocketClient(Logger.getGlobal(), new Point(0, 0), "testc", "nopubinfo,nochannel");
         client.connect(URI.create("ws://localhost:20001/"));
         client.waitForAssignment();
         client.subscribe(new CircularRegion(new Point(0, 0), 100), "test", true);

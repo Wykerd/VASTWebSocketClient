@@ -203,7 +203,7 @@ public class VASTWebSocketClient implements SPSClient {
 
         if (this.matcherAddr == null) return;
 
-        URI uri = URI.create(String.format("ws://%s:%d/?id=%s&pos=%f,%f&flags=%s", this.matcherAddr.getHost(), this.matcherAddr.getPort(), this.id, this.position.getX(), this.position.getY(), this.flags));
+        URI uri = URI.create(String.format("ws://%s:%d/?id=%s&pos=%f,%f&options=%s", this.matcherAddr.getHost(), this.matcherAddr.getPort(), this.id, this.position.getX(), this.position.getY(), this.flags));
 
         this.ws = new WebSocketClientImpl(uri, this);
     }
@@ -218,7 +218,7 @@ public class VASTWebSocketClient implements SPSClient {
     @Override
     public CompletableFuture<Boolean> connect(URI uri) {
         // add query params to the URI
-        String queryParams = String.format("?id=%s&pos=%f,%f&flags=%s", this.id, this.position.getX(), this.position.getY(), this.flags);
+        String queryParams = String.format("?id=%s&pos=%f,%f&options=%s", this.id, this.position.getX(), this.position.getY(), this.flags);
         URI newUri = URI.create(uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + uri.getPath() + queryParams);
 
         this.ws = new WebSocketClientImpl(newUri, this);
