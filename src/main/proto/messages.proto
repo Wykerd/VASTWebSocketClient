@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package dev.wykerd.vastproto;
+
+
+message Vec2d {
+  double x = 1;
+  double y = 2;
+}
+
+message CircularRegion {
+  Vec2d center = 1;
+  double radius = 2;
+}
+
+message PolygonRegion {
+  repeated Vec2d points = 1;
+}
+
+message Addr {
+  string host = 1;
+  uint32 port = 2;
+}
+
+message VASTClientMessage {
+  oneof message {
+    PubSubMessage publish = 1;
+    Subscribe subscribe = 2;
+    string unsubscribe = 3;
+    Vec2d move = 4;
+  }
+}
+
+message VASTServerMessage {
+  oneof message {
+    PubSubMessage publication = 1;
+    MatcherInfo confirm_matcher = 2;
+    MatcherInfo assign_matcher = 3;
+    string unsubscribe_response = 4;
+    string subscribe_response = 5;
+  }
+}
+
+message PubSubMessage {
+  bytes payload = 1;
+  optional string channel = 2;
+  oneof aoi {
+    CircularRegion circular = 3;
+    PolygonRegion polygon = 4;
+  }
+}
+
+message Subscribe {
+  string id = 1;
+  string channel = 2;
+  oneof aoi {
+    CircularRegion circular = 3;
+    PolygonRegion polygon = 4;
+  }
+  bool follow = 5;
+}
+
+message MatcherInfo {
+  string client_id = 1;
+  Vec2d matcher_position = 2;
+  Addr matcher_addr = 3;
+  uint64 matcher_id = 4;
+}
